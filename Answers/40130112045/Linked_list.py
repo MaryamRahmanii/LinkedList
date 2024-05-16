@@ -1,4 +1,4 @@
-
+from doublylinkedlist import Node,DoublyLinkedList
 class Node:
     def __init__(self, data):
         self.data = data
@@ -31,6 +31,20 @@ class LinkedList:
         if self.head is None:
             return "List is empty"
         self.head = self.head.next
+
+    def removelast(self):
+        if self.head is None:
+            return None
+        if self.head.next is None:
+            return None
+
+        current = self.head
+        while current.next.next is not None:
+            current = current.next
+
+        current.next=None
+
+
 
 
     def search(self, data):
@@ -73,6 +87,20 @@ class LinkedList:
                 print(i,end=" ")
 
 
+    # def reverse_recursive(self):
+    #     if self.head is None or self.head.next is None:
+    #         return self.head
+    #
+    #     newhead = self.head.reverse_recursive()
+    #     self.head.next.next=self.head
+    #     self.head.next=None
+    #
+    #     return newhead
+
+
+
+
+
 
     def reverse_none_recursive(self):
         prev = None
@@ -83,4 +111,22 @@ class LinkedList:
             prev = current
             current = next
         self.head = prev
+
+
+    def convert_singly_to_doubly(self):
+        doubly = DoublyLinkedList()
+        current = self.head
+        prev = None
+        while current:
+            new_node = Node(current.data)
+            if prev is not None:
+                prev.next = new_node
+                new_node.prev = prev
+            else:
+                doubly.head=new_node
+
+            prev = new_node
+            current = current.next
+        return doubly
+
 
