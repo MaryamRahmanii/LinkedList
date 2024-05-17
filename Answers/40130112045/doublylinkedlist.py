@@ -111,24 +111,41 @@ class DoublyLinkedList:
 
     def shift(self,num):
         if num>0:
-            for _ in range(abs(num)):
-                last = self.head
-                while last.next is not None:
-                    last = last.next
-                last.next = self.head
-                self.head.prev = last
-                self.head = self.head.prev
-                last.next.prev=None
-                last.next = None
+            if self.head is None or self.head.next is None:
+                return
+            last=self.head
+            second_last=None
+            while last.next is not None:
+                second_last=last
+                last=last.next
+
+            second_last.next=None
+            last.prev=None
+            last.next=self.head
+            self.head.prev=last
+            self.head=last
+
 
 
         if num<0:
-            for _ in range(abs(num)):
-                last = self.head
-                while last.next is not None:
-                    last = last.next
-                last.prev.next = None
-                last.prev = None
-                last.next=self.head
-                self.head.prev = last
-                self.head = last
+            num=abs(num)
+            current = self.head
+            count = 1
+            while count < num and current is not None:
+                current = current.next
+                count += 1
+
+            if current is None:
+                return
+
+            k_node = current
+            while current.next is not None:
+                current = current.next
+
+            current.next = self.head
+            self.head.prev=current
+            self.head = k_node.next
+            self.head.prev=None
+            k_node.next = None
+        if num==0:
+            return
